@@ -1,13 +1,15 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\Auth\GoogleController;
+
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 
 Route::get('/', function () {
     return view('welcome');
-});
+})->name('home');
 
 Route::get('/dashboard', function () {
     return view('dashboard');
@@ -70,5 +72,7 @@ Route::get('/callback', function (Request $request) {
     return $response->json();
 });
 
+Route::get('auth/google', [GoogleController::class, 'redirectToGoogle'])->name('auth.google');
+Route::get('auth/google/callback', [GoogleController::class, 'handleGoogleCallback']);
 
 require __DIR__.'/auth.php';
